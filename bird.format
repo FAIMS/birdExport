@@ -86,12 +86,12 @@ select date(measure, 'localtime', '+1 day') as dayDue, response as taskName, par
 
 
 select dayDue, response, tasks
-  from (select dayDue, 'Check: '||taskName as tasks, nestuuid, aenttypenameorder
+  from (select dayDue, 'Check: '||taskName as tasks, nestuuid, aenttypenameorder, parentuuid
           from taskList
           JOIN parentchild on (parentchild.childuuid = nestuuid)
      where parentchild.parentaenttypename = 'Box'
        and dayDue >= date(current_date, '-2 day')         
-          ) JOIN latestNonDeletedArchEntFormattedIdentifiers on (uuid = nestuuid)
+          ) JOIN latestNonDeletedArchEntFormattedIdentifiers on (uuid = parentuuid)
   order by dayDue, aenttypenameorder, response, tasks
   ;
 

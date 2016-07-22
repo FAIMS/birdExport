@@ -9,3 +9,4 @@ cd $2
 ruby $DIR/string_formatter_tester.rb $1/db.sqlite3 $DIR/shape.format > $3/shape.out
 ruby $DIR/string_formatter_tester.rb $1/db.sqlite3 $DIR/bird.format > $3/bird.out
 
+awk  'BEGIN{FS="\t"; print("\"Day Due\",\"Nest\",\"Task\"")}; /.*\t.*/ {print("\""$1 "\",\"" $2 "\",\"" $3 "\"");}' $3/bird.out > $3/bird.csv

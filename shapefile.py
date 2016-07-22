@@ -306,7 +306,7 @@ for line in codecs.open(exportDir+'shape.out', 'r', encoding='utf-8').readlines(
 
 
 exportCon.commit()
-files = ['shape.sqlite3', 'bird.out']
+files = ['shape.sqlite3', 'bird.csv']
 
 
 

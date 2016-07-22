@@ -92,7 +92,7 @@ select dayDue, response, tasks
      where parentchild.parentaenttypename = 'Box'
        and dayDue >= date(current_date, '-2 day')
          order by aenttypenameorder, dayDue
-          ) JOIN latestNonDeletedArchEntFormattedIdentifiers USING (uuid)
+          ) JOIN latestNonDeletedArchEntFormattedIdentifiers on (uuid = nestuuid)
   order by dayDue
   ;
 

@@ -111,7 +111,7 @@ from (
   order by uuid, aentcountorder) 
 group by uuid 
 order by uuid) USING (uuid)
-  order by dayDue, aenttypenameorder, response, tasks
+  order by dayDue, response, aenttypenameorder, tasks
   ;
 
 

@@ -38,6 +38,7 @@ import errno
 import imghdr
 import bz2
 import tarfile
+import datetime
 
 from collections import defaultdict
 import zipfile
@@ -306,7 +307,7 @@ for line in codecs.open(exportDir+'shape.out', 'r', encoding='utf-8').readlines(
 
 
 exportCon.commit()
-files = ['shape.sqlite3', 'bird.csv']
+files = ['shape.sqlite3', datetime.date.today().strftime("BirdNesting-OutstandingTasks-%Y-%m-%d.csv")]
 
 
 

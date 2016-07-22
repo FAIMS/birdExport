@@ -307,16 +307,22 @@ for line in codecs.open(exportDir+'shape.out', 'r', encoding='utf-8').readlines(
 
 
 exportCon.commit()
-files = [datetime.date.today().strftime("BirdNesting-OutstandingTasks-%Y-%m-%d.csv")]
+
+filename=datetime.date.today().strftime("BirdNesting-OutstandingTasks-%Y-%m-%d.csv")
+shutil.copyfile(exportDir+filename, finalExportDir+filename)
 
 
 
+
+'''
 tarf = tarfile.open("%s/%s-export.tar.bz2" % (finalExportDir,moduleName), 'w:bz2')
 try:
     for file in files:
         tarf.add(exportDir+file, arcname=moduleName+'/'+file)
 finally:
     tarf.close()
+'''
+
 
 
 try:

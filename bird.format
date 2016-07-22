@@ -3,6 +3,21 @@
 attach database 'shape.sqlite3' as shape;
 
 
+DROP VIEW IF EXISTS parentchild;", null
+CREATE VIEW parentchild AS 
+SELECT parent.uuid as parentuuid, child.uuid as childuuid, parent.participatesverb as parentparticipatesverb, parent.relationshipid, parent.aenttypename as parentaenttypename, child.participatesverb as childparticipatesverb, child.aenttypename as childaenttypename
+  FROM (SELECT uuid, participatesverb, aenttypename, relationshipid
+          FROM latestnondeletedaentreln 
+          JOIN relationship USING (relationshipid) 
+          JOIN latestnondeletedarchent USING (uuid) 
+          JOIN aenttype USING (aenttypeid)) parent 
+  JOIN (SELECT uuid, relationshipid, participatesverb, aenttypename 
+          FROM latestnondeletedaentreln 
+          JOIN relationship USING (relationshipid) 
+          JOIN latestnondeletedarchent USING (uuid) 
+          JOIN aenttype USING (aenttypeid)) child 
+    ON (parent.relationshipid = child.relationshipid AND parent.uuid != child.uuid);
+
 drop view latestNonDeletedArchEntFormattedIdentifiers;
 CREATE VIEW latestNonDeletedArchEntFormattedIdentifiers as 
 select uuid, aenttypeid, aenttypename, group_concat(response, '') as response, null as deleted 

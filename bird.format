@@ -45,44 +45,36 @@ drop view if exists truncFormattedIdentifier;
 create view truncFormattedIdentifier as 
   select uuid, format(trim(formatstring,'-'), null, measure, freetext, certainty) as response 
                                 from latestnondeletedaentvalue join attributekey using (attributeid)
-                                where attributename in ('Nest Nest ID', 'Egg ID', 'Chick Chick ID');
+                                where attributename in ('Nest Nest ID');
 
 drop view if exists tasklist;
 create view tasklist as 
-select date(measure, 'localtime', '+1 day') as dayDue, response as taskName, parentchild.parentuuid as nestuuid, 2 as aenttypenameorder 
-                        from latestnondeletedaentvalue
-                        join truncFormattedIdentifier as task using (uuid)
-                        join attributekey using (attributeid)
-                        join parentchild on (parentchild.childuuid = task.uuid)
-                       where attributename = 'Egg timestamp'
-                       union
-            select date(measure, 'localtime', '+1 day') as dayDue, response as taskName, parentchild.parentuuid as nestuuid, 3 as aenttypenameorder 
-                        from latestnondeletedaentvalue
-                        join truncFormattedIdentifier as task using (uuid)
-                        join attributekey using (attributeid)
-                        join parentchild on (parentchild.childuuid = task.uuid)
-                       where attributename = 'Chick timestamp'                      
-                       union
-            select date(measure, 'localtime', '+1 day') as dayDue, response as taskName, uuid as nestuuid, 1 as aenttypenameorder 
-                        from latestnondeletedaentvalue
-                        join truncFormattedIdentifier as task using (uuid)
-                        join attributekey using (attributeid)
-                       where attributename = 'Nest Completed at'
-                       union                       
-                      select date(measure, 'localtime', '+7 day') as dayDue, response as taskName, parentchild.parentuuid as nestuuid, 2 as aenttypenameorder 
-                        from latestnondeletedaentvalue
-                        join truncFormattedIdentifier as task using (uuid)
-                        join attributekey using (attributeid)
-                        join parentchild on (parentchild.childuuid = task.uuid)
-                       where attributename = 'Chick timestamp'
-                       union
-                      select date(measure, 'localtime', '+12 day') as deayDue, response as taskName, parentchild.parentuuid as nestuuid, 2 as aenttypenameorder 
-                        from latestnondeletedaentvalue
-                        join truncFormattedIdentifier as task using (uuid)
-                        join attributekey using (attributeid)
-                        join parentchild on (parentchild.childuuid = task.uuid)
-                       where attributename = 'Chick timestamp'
-                       order by taskName desc, aenttypenameorder, dayDue;
+   select date(replace(measure,'/','-'), '+3 day') as dayDue, response as taskName, uuid as nestuuid, 3 as aenttypenameorder 
+    from latestnondeletedaentvalue
+    join truncFormattedIdentifier as task using (uuid)
+    join attributekey using (attributeid)
+   where attributename = 'Actual Day of Hatching'      
+   union                   
+  select date(replace(measure,'/','-'), '+7 day') as dayDue, response as taskName, uuid as nestuuid, 2 as aenttypenameorder 
+    from latestnondeletedaentvalue
+    join truncFormattedIdentifier as task using (uuid)
+    join attributekey using (attributeid)
+   where attributename = 'Actual Day of Hatching'
+   union
+  select date(replace(measure,'/','-'), '+11 day') as dayDue, response as taskName, uuid as nestuuid, 2 as aenttypenameorder 
+    from latestnondeletedaentvalue
+    join truncFormattedIdentifier as task using (uuid)
+    join attributekey using (attributeid)
+   where attributename = 'Actual Day of Hatching'
+   union
+  select date(replace(measure,'/','-'), '+18 day') as dayDue, response as taskName, uuid as nestuuid, 2 as aenttypenameorder 
+    from latestnondeletedaentvalue
+    join truncFormattedIdentifier as task using (uuid)
+    join attributekey using (attributeid)
+   where attributename = 'Actual Day of Hatching'
+   order by taskName desc, aenttypenameorder, dayDue
+   ;
+
 
 
 select dayDue, response, tasks

@@ -39,6 +39,7 @@ import imghdr
 import bz2
 import tarfile
 import datetime
+import lsb_release
 
 from collections import defaultdict
 import zipfile

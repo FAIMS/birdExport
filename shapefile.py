@@ -107,7 +107,7 @@ class UnicodeWriter:
         if isinstance(obj, buffer):         
             bufferCon = sqlite3.connect(':memory:')
             bufferCon.enable_load_extension(True)
-            bufferCon.load_extension("libspatialite.so.5")
+            bufferCon.load_extension(LIBSPATIALITE)
             foo = bufferCon.execute("select astext(?);", ([obj])).fetchone()            
             return foo[0]
         if obj == None:
@@ -178,6 +178,12 @@ arch16nFiles=[]
 for file in glob.glob(originalDir+"*.properties"):
     arch16nFiles.append(file)
 
+
+if lsb_release.get_lsb_information()['RELEASE'] == '16.04':
+    LIBSPATIALITE = 'mod_spatialite.so'
+else:
+    LIBSPATIALITE = 'libspatialite.so.5'    
+
 arch16nFile = next((s for s in arch16nFiles if '.0.' in s), arch16nFiles[0])
 # print jsondata
 moduleName = clean(jsondata['name'])
@@ -210,10 +216,10 @@ except OSError:
 
 importCon = sqlite3.connect(importDB)
 importCon.enable_load_extension(True)
-importCon.load_extension("libspatialite.so.5")
+importCon.load_extension(LIBSPATIALITE)
 exportCon = sqlite3.connect(exportDB)
 exportCon.enable_load_extension(True)
-exportCon.load_extension("libspatialite.so.5")
+exportCon.load_extension(LIBSPATIALITE)
 
 
 exportCon.execute("select initSpatialMetaData(1)")
@@ -228,7 +234,7 @@ for line in importCon.iterdump():
 exifCon = sqlite3.connect(exportDB)
 exifCon.row_factory = dict_factory
 exportCon.enable_load_extension(True)
-exportCon.load_extension("libspatialite.so.5")
+exportCon.load_extension(LIBSPATIALITE)
 
 
   

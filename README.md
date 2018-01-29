@@ -5,7 +5,7 @@ This exporter was created for the Bird Nesting module, for the Griffith Ecology 
 This exporter was co-developed by Simon Griffith at Macquarie University, Hanja Brandl and Caterina Funghi at University of Hamburg and Adela Sobotkova, Petra Janouchova and Brian Ballsun-Stanton at the FAIMS Project, Department of Ancient History, Macquarie University.
 
 ## Funding:
-Development of this exporter was funded by the Research Attraction and Acceleration Program (RAAP) aimed to support innovation and investment in the New South Wales in 2016 and 2017.
+Development of this exporter was funded by the **Research Attraction and Acceleration Program (RAAP) NSW Department of Industry 16805/00 ** aimed to support innovation and investment in the New South Wales in 2016 and 2017.
 
 
 ## Date of release:
